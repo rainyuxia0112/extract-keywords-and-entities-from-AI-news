@@ -222,7 +222,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
 #测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
 if __name__ == '__main__':
     import pandas as pd
-    data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[200:300,:]
+    data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:200,:]
     time = []
     title = []
     orgnization = []
@@ -238,4 +238,4 @@ if __name__ == '__main__':
         print (i)
     dic = {'时间': time,'标题': title, '机构': orgnization,'人物':person, '机构人物关系对': relation}
     new_data = pd.DataFrame(dic)
-    new_data.to_csv('new_data_entity_add3.csv')
+    new_data.to_csv('new_data_entity_add.csv')

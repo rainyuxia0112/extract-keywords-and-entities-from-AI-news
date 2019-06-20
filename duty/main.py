@@ -21,10 +21,10 @@ import jieba.analyse
 os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
 # 查看当前路径位置
 os.getcwd() 
-#引入两个脚本
-import models.TF_PO 
-from models.extract_keywords import *
-import models.BosonNLP_PO
+#引入三个脚本
+import script.TF_PO 
+from script.extract_keywords import *
+import script.BosonNLP_PO
 
 
 def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentMode=[1, 1, 0],
