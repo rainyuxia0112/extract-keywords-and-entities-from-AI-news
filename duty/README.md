@@ -6,20 +6,20 @@
 
 ## Prerequisites
 
-[certifi](https://pypi.org/project/certifi/)
-[chardet](https://pypi.org/project/chardet/)
-[fuzzywuzzy](https://github.com/seatgeek/fuzzywuzzy)
-[idna](https://pypi.org/project/idna/)
-[jieba](https://github.com/fxsjy/jieba)
-[python-dateutil](https://pypi.org/project/python-dateutil/1.4/)
-[requests](https://2.python-requests.org/en/master/])
-[scikit-learn](https://scikit-learn.org/stable/)
-[scipy](https://www.scipy.org/)
-[urllib3](https://urllib3.readthedocs.io/en/latest/)
-[zhon](https://zhon.readthedocs.io/en/latest/)
-[nltk](https://www.nltk.org/)      
-[tensorflow](https://www.tensorflow.org/)
-[pyltp](https://github.com/HIT-SCIR/pyltp)
+* [certifi](https://pypi.org/project/certifi/) Certifi is a carefully curated collection of Root Certificates
+* [chardet](https://pypi.org/project/chardet/) This is a continuation of Mark Pilgrim's excellent chardet
+* [fuzzywuzzy](https://github.com/seatgeek/fuzzywuzzy) It uses Levenshtein Distance to calculate the differences between sequences in a simple-to-use package.
+* [idna](https://pypi.org/project/idna/)
+* [jieba](https://github.com/fxsjy/jieba) Chinese text segmentation
+* [python-dateutil](https://pypi.org/project/python-dateutil/1.4/) The dateutil module provides powerful extensions to the standard datetime module
+* [requests](https://2.python-requests.org/en/master/) Requests allows you to send organic, grass-fed HTTP/1.1 requests
+* [scikit-learn](https://scikit-learn.org/stable/) Simple and efficient tools for data mining and data analysis
+* [scipy](https://www.scipy.org/) a Python-based ecosystem of open-source software for mathematics
+* [urllib3](https://urllib3.readthedocs.io/en/latest/) urllib3 is a powerful, sanity-friendly HTTP client for Python
+* [zhon](https://zhon.readthedocs.io/en/latest/) Zhon is a Python library that provides constants commonly used in Chinese text processing
+* [nltk](https://www.nltk.org/) a leading platform for building Python programs to work with human language data   
+* [tensorflow](https://www.tensorflow.org/) TensorFlow is an end-to-end open source platform for machine learning
+* [pyltp](https://github.com/HIT-SCIR/pyltp) Language Technology Platform 
 
 
 ## 脚本介绍
