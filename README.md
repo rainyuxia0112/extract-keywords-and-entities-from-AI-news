@@ -4,6 +4,41 @@
 * 根据词库词汇提取文章关键词；
 * 针对结果输出成api；
 
+## 脚本介绍
+这个文件夹包含```4```个主要脚本：
+
+- ```extract_keywords.py```
+
+基于```机器之心```的脚本，使用tfidf方法提取文章的关键词。脚本使用文章的```title```和```content```信息进行分析，加以不同权重，输出分数高的前几个关键词。使用时需修改输入文件地址(```csv```格式)、输入文件对应字段名(```title```和```content```)、输出文件名。
+
+- ```TF_PO.py```
+
+使用```zh-NER-TF```：脚本使用文章的```title```和```content```信息进行分析，以一个csv文件为输入，输出一个dataframe其中包含：新闻title，人物，机构，人物机构关系等entity（该脚本的使用需要改动输入的csv，目前使用的是aidaily)。
+
+- ```BosonNLP_PO.py```
+
+使用```BosonNLP```：脚本使用文章的```title```和```content```信息进行分析，以一个csv文件为输入，输出一个dataframe其中包含：新闻title，人物，机构，人物机构关系等entity（该脚本的使用需要改动输入的csv，目前使用的是aidaily)。
+
+- ```main```
+
+使用```main```：
+[main.py]脚本使用dataframe的```title```,```content```和```description```信息进行分析，以一个csv文件为输入，输出一个dataframe, 是```TF_PO.py```和```extract_keywords.py```的结合，先提取中其中的主题主体词，再进行关键词提取
+
+## 文件夹介绍
+这个文件夹主要包含```4```个文件夹：
+
+- ```models```
+该文件夹中包含了主要脚本运行时需要的所有原代码： 包含```TF_PO```， ```extract_keywords```和```BosonNLP_PO.py```脚本的运行文件
+
+- ```dictionary```
+该文件夹包含了所有脚本需要用到的词库（停用词表，主体org词表， 主体peo词表等）
+
+- ```script```
+该文件夹包含了```TF_PO.py```， ```BosonNLP_PO.py``` 和```extract_keywords.py``` 3个脚本，可以单独运行
+
+- ```api```
+该文件夹包含了```entity_keyword_api.py```主要用于将训练得到的主题主体词汇和关键词导出成API
+
 ## Prerequisites
 
 * [certifi](https://pypi.org/project/certifi/) Certifi is a carefully curated collection of Root Certificates
@@ -19,31 +54,15 @@
 * [zhon](https://zhon.readthedocs.io/en/latest/) Zhon is a Python library that provides constants commonly used in Chinese text processing
 * [nltk](https://www.nltk.org/) a leading platform for building Python programs to work with human language data   
 * [tensorflow](https://www.tensorflow.org/) TensorFlow is an end-to-end open source platform for machine learning
-* [pyltp](https://github.com/HIT-SCIR/pyltp) Language Technology Platform 
-
-
-## 脚本介绍
-这个文件夹主要包含```3```个脚本：
-
-
-- ```extract_keywords.py```
-
-基于```机器之心```的脚本，使用tfidf方法提取文章的关键词。脚本使用文章的```title```和```content```信息进行分析，加以不同权重，输出分数高的前几个关键词。使用时需修改输入文件地址(```csv```格式)、输入文件对应字段名(```title```和```content```)、输出文件名。
-
-
-- ```TF_PO.py```
-
-使用```zh-NER-TF```：脚本使用文章的```title```和```content```信息进行分析，以一个csv文件为输入，输出一个dataframe其中包含：新闻title，人物，机构，人物机构关系等entity（该脚本的使用需要改动输入的csv，目前使用的是aidaily)。
-
-- ```main```
-
-使用```main```：
-[main.py]脚本使用dataframe的```title```,```content```和```description```信息进行分析，以一个csv文件为输入，输出一个dataframe, 是```TF_PO.py```和```extract_keywords.py```的结合，先提取中其中的主题主体词，再进行关键词提取
+* [pyltp](https://github.com/HIT-SCIR/pyltp) Language Technology Platform
 
 - 需要改路径的有：
 TF_PO.py
 entity_keyword_api.py
 extract_keywords.py
-main.py## Acknowledgments
+main.py
+
+## Acknowledgments
+
 * Author： Yu Xia
 * Contributor: [mosroot](https://github.com/mosroot)
