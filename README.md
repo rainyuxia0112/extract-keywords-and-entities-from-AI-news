@@ -31,7 +31,7 @@
 该文件夹中包含了主要脚本运行时需要的所有原代码： 包含```TF_PO```， ```extract_keywords```和```BosonNLP_PO.py```脚本的运行文件
 
 - ```dictionary```
-该文件夹包含了所有脚本需要用到的词库（停用词表，主体org词表， 主体peo词表等）
+该文件夹包含了所有脚本需要用到的词库（停用词表，主体org词表， 主体per词表等）
 
 - ```script```
 该文件夹包含了```TF_PO.py```， ```BosonNLP_PO.py``` 和```extract_keywords.py``` 3个脚本，可以单独运行

@@ -22,9 +22,9 @@ os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到�
 # 查看当前路径位置
 os.getcwd() 
 #引入三个脚本
-import script.TF_PO 
+import script.TF_PO  as TF_PO
 from script.extract_keywords import *
-import script.BosonNLP_PO
+import script.BosonNLP_PO as BosonNLP_PO
 
 
 def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentMode=[1, 1, 0],
@@ -54,7 +54,7 @@ def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentM
             person.append(result[1][1])
             relation.append(result[1][2])
             print (i)
-    if method ==  'BosonNLP_PO':        
+    if method == 'BosonNLP_PO':        
         for i in range(len(data)):
             result = BosonNLP_PO.NER_PO(articleType, data.iloc[i, :])
             time.append(data.iloc[i, 2])
@@ -97,6 +97,3 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
                                                       title_weight=title_weight)
     
     return (df)
-
-#小小测试
-new_= extract_entity(data, method = 'zh_NER_TF')
