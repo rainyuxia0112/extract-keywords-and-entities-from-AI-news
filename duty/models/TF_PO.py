@@ -57,11 +57,11 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
             tf.reset_default_graph() #引入reset_default_graph() 使得 zh_ner_master 重置 导出一个错误的部分，不要对这个部分进行改动 
             people_0, loc_0, org_0 = zh_NER_TF_master(title+content+description)
             for ele in people_0:
-                if not re.findall('[/, =,《]', ele):
+                if not re.findall('[/, =,(,),《]', ele):
                     if ele not in peopleList:
                         peopleList.append(ele)
             for ele in org_0:
-                if not re.findall('[/, =,《]', ele):
+                if not re.findall('[/, =,[(],[)],《]', ele):
                     if ele not in orgList:
                         orgList.append(ele)
             
@@ -139,12 +139,12 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                     words[i][1] = tagInterpret[engTagging(expandedWord, accurateMode, StanfordTagger)]
                     if words[i][1] == 'PEO':
                         if words[i][0] not in peopleList:
-                            if not re.findall('[/, =,《,》]', words[i][0]):
+                            if not re.findall('[/, =,《,(,),》]', words[i][0]):
                                 peopleList.append(words[i][0])
                                 titleDict[words[i][0].strip()] = []
                     if words[i][1] == 'ORG':
                         if words[i][0] not in orgList:
-                            if not re.findall('[/, =,《]', words[i][0]):
+                            if not re.findall('[/, =,(,),》,《]', words[i][0]):
                                 orgList.append(words[i][0])
 
                     i = end
@@ -222,7 +222,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
 #测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
 if __name__ == '__main__':
     import pandas as pd
-    data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:5,:]
+    data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[200:300,:]
     time = []
     title = []
     orgnization = []
@@ -238,4 +238,4 @@ if __name__ == '__main__':
         print (i)
     dic = {'时间': time,'标题': title, '机构': orgnization,'人物':person, '机构人物关系对': relation}
     new_data = pd.DataFrame(dic)
-    new_data.to_csv('new_data_entity_add.csv')
+    new_data.to_csv('new_data_entity_add3.csv')
