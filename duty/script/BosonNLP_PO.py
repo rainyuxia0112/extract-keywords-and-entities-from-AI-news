@@ -6,7 +6,7 @@ from bosonnlp import BosonNLP
 import os
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
+#os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
 # 查看当前路径位置
 os.getcwd()  # 路径需要在最外层文件夹！！
 from models.namedEntityTools import *
@@ -191,26 +191,6 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
     l = helper(title, content, description, contentMode, useExpanded, accurateMode)  # l 为最后输出的关系
     return (l)
 
-
-#测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
-if __name__ == '__main__':
-    import pandas as pd
-    data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:5,:]
-    time = []
-    title = []
-    orgnization = []
-    person = []
-    relation = []
-    for i in range(len(data)):
-        result = NER_PO('AIDaily', data.iloc[i, :])
-        time.append(data.iloc[i, 2])
-        title.append(result[0])
-        orgnization.append(result[1][0])
-        person.append(result[1][1])
-        relation.append(result[1][2])
-        print (i)
-    dic = {'时间': time,'标题': title, '机构': orgnization,'人物':person, '机构人物关系对': relation}
-    new_data = pd.DataFrame(dic)
 
 
 

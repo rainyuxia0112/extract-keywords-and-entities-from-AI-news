@@ -6,7 +6,7 @@ import sys
 import os
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
+#os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
 # 查看当前路径位置
 os.getcwd()  # 路径需要在最外层文件夹！！
 from models.namedEntityTools import *

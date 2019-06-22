@@ -1,6 +1,6 @@
 #-*- encoding:utf-8 -*-
 import os
-os.chdir('/Users/rain/todo-api/flask/duty') 
+#os.chdir('/Users/rain/todo-api/flask/duty') 
 
 from models.tfidf import cal_tfidf    
 import pandas as pd

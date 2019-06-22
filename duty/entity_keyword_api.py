@@ -14,10 +14,7 @@ os.chdir('/Users/rain/todo-api/flask/duty')
 import main
 import pandas as pd
 from flask import request, jsonify
-# aidaily 
-data_aidaily = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:5,:] #只先测试5个
-# 1000篇文章
-data_article = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:5,:] #只先测试5个
+data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:3,:]
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -33,21 +30,16 @@ def api_query_entity():
     # If no query is provided, display an error in the browser.
     list_output = []
     if 'query' in request.args:
-        articleType= (request.args['query'])
+        query= (request.args['query'])
+        articleType = query
     else:
         articleType = 'AIDaily'
-    if 'method' in request.args:
-        method = request.args['method']
-    else:
-        method = 'zh_NER_TF'
-    if articleType == 'AIDaily':
-        new_data = main.extract_entity(data_aidaily, articleType, method)
-    else:
-        new_data = main.extract_entity(data_article, articleType, method)
+    new_data = main.extract_entity(data, articleType)
     for i in range(len(new_data)):
         #dic = new_data.iloc[i,:].to_dict(orient = 'dict')  将dataframe转换成dic
         dic = new_data.iloc[i,:].to_dict()  # 将series转成dic 输出
         list_output.append(dic)
+        print (list_output)
     return jsonify(list_output)
 
 @app.route('/api/resources/keywords', methods=['GET'])
@@ -57,15 +49,11 @@ def api_query_keyword():
     # If no query is provided, display an error in the browser.
     list_output = []
     if 'query' in request.args:
-        articleType= (request.args['query'])
+        query= (request.args['query'])
+        articleType = query
     else:
         articleType = 'AIDaily'
-    if articleType == 'AIDaily':   
-        new_data = main.extract_keywords(data_aidaily,articleType, cut_method='tfidf', 
-                                         top_k=5, normalize_title_content=True)
-    else:
-        new_data = main.extract_keywords(data_article,articleType, cut_method='tfidf', 
-                                         top_k=5, normalize_title_content=True)
+    new_data = main.extract_keywords(data,articleType, cut_method='tfidf', top_k=5, normalize_title_content=True)
     for i in range(len(new_data)):
         #dic = new_data.iloc[i,:].to_dict(orient = 'dict')  将dataframe转换成dic
         dic = new_data.iloc[i,:].to_dict()  # 将series转成dic 输出
@@ -77,5 +65,7 @@ def api_query_keyword():
     return jsonify(list_output)
 
 if __name__== '__main__':
-    app.run(debug = True)
+    app.run(
+        port = 8000,  
+        debug = True)
 
