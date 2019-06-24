@@ -17,11 +17,10 @@ xlrd==1.1.0
 xlwt==1.3.0
 zhon==1.1.5
 nltk>=3.3
-jieba>=0.39
 requests>=2.12.4
 selenium>=3.11.0
 python-dateutil==2.7
 numpy>=1.14.2                 
 tensorflow>=1.12.0
 pyltp>=0.2.1
-fuzzywuzzy
+
