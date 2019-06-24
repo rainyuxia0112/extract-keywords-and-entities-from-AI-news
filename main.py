@@ -26,6 +26,16 @@ import script.TF_PO as TF_PO
 from script.extract_keywords import *
 import script.BosonNLP_PO
 
+param_grid = {'articleType':'AIDaily',
+              'method' : 'zh_NER_TF',
+              'contentMode' : [1, 1, 0],
+              'useExpanded' : [1, 0, 1],
+              'title_weight': 0.8,
+              'cut_method': 'tfidf', 
+              'top_k': 5, 
+              'normalize_title_content': True
+              
+        }
 
 def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentMode=[1, 1, 0],
            useExpanded=[1, 0, 1], accurateMode=False, dirName='outputs'): 
@@ -100,3 +110,9 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
 
 #小小测试
 #new_= extract_entity(data, method = 'zh_NER_TF')
+#测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
+if __name__ == '__main__':
+    import pandas as pd
+    data = pd.read_csv('.models/test/aidaily_articles.csv').iloc[:200,:]
+    data_entity = extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF')
+    data_keywords =  extract_keywords(data, articleType = 'AIDaily')
