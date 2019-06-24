@@ -22,7 +22,7 @@ topN = 5  # 每篇文章保留前5个关键词
 
 - 执行下列命令，运行脚本
 ```python
-python Analyser.py
+python main.py
 ```
 
 # 运行说明
