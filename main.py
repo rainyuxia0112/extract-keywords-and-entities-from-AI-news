@@ -7,7 +7,7 @@ Created on Fri May 31 19:08:04 2019
 """
 # 导入包
 # -*- coding: utf-8 -*
-from pyltp import SentenceSplitter
+#from pyltp import SentenceSplitter
 import jieba.posseg as pseg
 from nltk.tag.stanford import StanfordNERTagger
 import sys
@@ -113,6 +113,6 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
 #测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
 if __name__ == '__main__':
     import pandas as pd
-    data = pd.read_csv('.models/test/aidaily_articles.csv').iloc[:200,:]
-    data_entity = extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF')
-    data_keywords =  extract_keywords(data, articleType = 'AIDaily')
+    data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
+    data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'])
+    data_keywords =  extract_keywords(data, param_grid['articleType'])

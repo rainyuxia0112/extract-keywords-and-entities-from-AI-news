@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 from __future__ import print_function, unicode_literals
-from pyltp import SentenceSplitter
+#from pyltp import SentenceSplitter
 from nltk.tag.stanford import StanfordNERTagger
 from bosonnlp import BosonNLP
 import os
@@ -47,8 +47,8 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
     nlp = BosonNLP('Cpcr3Wym.33210.xQpBxPaHIXmi')
 
     def helper(title, content, description, contentMode, useExpanded, accurateMode):
-        #sentences = splitSentence(title, content, description, contentMode)
-        sentences = list(SentenceSplitter.split(title+content+description))
+        sentences = splitSentence(title, content, description, contentMode)
+        #sentences = list(SentenceSplitter.split(title+content+description))
         peopleList = []
         orgList = []
         relationDict = defaultdict(list)

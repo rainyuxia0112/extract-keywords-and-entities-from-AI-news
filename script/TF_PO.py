@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*
-from pyltp import SentenceSplitter
+#from pyltp import SentenceSplitter
 import jieba.posseg as pseg
 from nltk.tag.stanford import StanfordNERTagger
 import sys
@@ -46,8 +46,8 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
         description = data[2]
         
     def helper(title, content, description, contentMode, useExpanded, accurateMode):
-        #sentences = splitSentence(title, content, description, contentMode)
-        sentences = SentenceSplitter.split(title+content+description)
+        sentences = splitSentence(title, content, description, contentMode)
+        #sentences = SentenceSplitter.split(title+content+description)
         peopleList = []
         orgList = []
         relationList = []
