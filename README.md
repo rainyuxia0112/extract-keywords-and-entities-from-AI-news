@@ -93,5 +93,5 @@ param_grid = {'articleType':'AIDaily', # 新闻类型
 - ```api```
 该文件夹包含了```entity_keyword_api```主要用于将训练得到的主题主体词汇和关键词导出成API
 
-* Author: Yu Xia
-* Contributor: [Mos Zhang](https://github.com/mosroot)
+# Contributors
+[Mos Zhang](https://github.com/mosroot), [Yu Xia](https://github.com/rainyuxia0112)
