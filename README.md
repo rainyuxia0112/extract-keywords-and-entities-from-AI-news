@@ -12,7 +12,7 @@ pip install -r requirements.txt
 - 路径设置
 
 ```python
-dict_dir = '../dictionary'  # 包含所需用到的所有词典
+dict_dir = './dictionary'  # 包含所需用到的所有词典
 stop_words_path = './dictionary/stop_words.dat'  # 停用词文件路径
 test = './models/test' # 包含所有测试用的数据，在进行脚本时，可以将新数据放在该位置
 data = './models/test/aidaily_articles.csv'  # 输入 csv 路径
