@@ -1,6 +1,6 @@
 # functions used in main extractNames unction
-# -*- coding: utf-8 -*
-#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#!/bin/env python
 # Split 'content' by sentence. Parameter contentMode is 3-bit long, each bit represents whether or not to include title, content or description. 0 for not include, 1 for include.
 import sys
 import re
