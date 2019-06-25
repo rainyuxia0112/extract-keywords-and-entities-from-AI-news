@@ -4,6 +4,16 @@
 
 # Get Started
 
+- 安装前准备
+
+* 此任务需要在python3.X环境下进行，请将默认的python版本调整至3.X
+
+* 请在terminal中重新激活一个独立开发环境用于此任务
+
+```shell
+source ./bin/activate   # 或者使用. ./bin/activate
+```
+
 - 安装依赖
 
 ```shell
@@ -19,8 +29,6 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
 ```
-
-* 注意：此任务需要在python3.X环境下使用。
 
 - 路径设置
 
@@ -49,11 +57,18 @@ python3 main.py #也可以直接使用python main.py
 
 ### 输入文件格式要求
 
-输入的 csv 文件应当放在 input 目录中，并包含以下字段：
+输入的 csv 文件应当放在 test 目录中，并包含以下字段：
 - **title**
 - **content**
 - **date**
 - **description** (optional)
+
+### 输出文件
+
+输出的 csv 文件在 test 目录中，并包含以下两个csv文件：
+- **out_entity.csv**
+- **out_keywords.csv**
+
 
 ### 参数选择
 
