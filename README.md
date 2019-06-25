@@ -7,8 +7,21 @@
 - 安装依赖
 
 ```shell
-pip install -r requirement.txt
+pip3 install -r requirement.txt
 ```
+* 可能出现的问题：在 ``` import nltk ``` 后会需要download一些词库，请先使用``` python3 ```进入python交互模式,请执行以下操作：
+
+```python
+import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+
+```
+
+* 注意：此任务需要在python3.X环境下使用。
+
 - 路径设置
 
 ```python
@@ -17,12 +30,11 @@ stop_words_path = './dictionary/stop_words.dat'  # 停用词文件路径
 test = './models/test' # 包含所有测试用的数据，在进行脚本时，可以将新数据放在该位置
 data = './models/test/aidaily_articles.csv'  # 输入 csv 路径
 topN = 5  # 每篇文章保留前5个关键词
-
 ```
 
 - 执行下列命令，运行脚本
-```python
-python main.py
+```shell
+python3 main.py #也可以直接使用python main.py
 ```
 
 # 运行说明
