@@ -7,7 +7,7 @@
 - 安装依赖
 
 ```shell
-pip install -r requirements.txt
+pip install -r requirement.txt
 ```
 - 路径设置
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*
-#!/bin/env python
+#!user/bin/env python3
 #from pyltp import SentenceSplitter
 import jieba.posseg as pseg
 import tensorflow as tf
