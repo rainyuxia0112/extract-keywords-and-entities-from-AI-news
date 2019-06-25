@@ -10,7 +10,6 @@ Created on Mon Jun 17 13:51:49 2019
 import sys
 import flask
 import os
-#os.chdir('/Users/rain/todo-api/flask/duty') 
 import main
 import pandas as pd
 from flask import request, jsonify
