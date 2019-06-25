@@ -17,7 +17,7 @@ source ./bin/activate   # 或者使用. ./bin/activate
 - 安装依赖
 
 ```shell
-pip3 install -r requirement.txt # 该任务的equirement在api文件夹中
+pip3 install -r requirement.txt # 该任务的requirement在api文件夹中
 ```
 * Note：安装Flask时注意安装官网要求进行测试与安装：[flask](http://flask.pocoo.org/)
 
