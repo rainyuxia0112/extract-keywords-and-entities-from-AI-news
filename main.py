@@ -116,3 +116,5 @@ if __name__ == '__main__':
     data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
     data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'])
     data_keywords =  extract_keywords(data, param_grid['articleType'])
+    data_entity.to_csv('./models/test/out_entity.csv')
+    data_keywords.to_csv('./models/test/out_keywords.csv')
