@@ -19,4 +19,4 @@ zhon==1.1.5
 nltk>=3.3
 selenium>=3.11.0                
 tensorflow>=1.12.0
-
+bosonnlp=0.11.1
