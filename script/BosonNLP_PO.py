@@ -36,12 +36,12 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
     tagInterpret = ['ORG', 'PEO', 'O']
     lastNameDict = txtToDict("./dictionary/last name.txt")
     StanfordTagger = StanfordNERTagger('./dictionary/stanford-ner-2014-08-27/classifiers/english.all.3class.distsim.crf.ser.gz','./dictionary/stanford-ner-2014-08-27/stanford-ner.jar')
-    title = data[0] # 需要注意导入的数据情况哦！
-    content = data[1]
+    title = data['title'] # 需要注意导入的数据情况哦！
+    content = data['content']
     if articleType == 'AIDaily':
         description = ''
     else: 
-        description = data[2]
+        description = data['description']
     #nlp = BosonNLP('jj-zE93I.33208.2PLQn2ZwoOOs')
     #nlp = BosonNLP('Q-VXkanb.33198.7UaoJU9ozS-n')
     nlp = BosonNLP('Cpcr3Wym.33210.xQpBxPaHIXmi')

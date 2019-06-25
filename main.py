@@ -24,7 +24,7 @@ os.getcwd()
 #引入三个脚本
 import script.TF_PO as TF_PO
 from script.extract_keywords import *
-import script.BosonNLP_PO
+import script.BosonNLP_PO as BosonNLP_PO
 
 param_grid = {'articleType':'AIDaily',
               'method' : 'zh_NER_TF',
@@ -58,8 +58,8 @@ def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentM
     if method ==  'zh_NER_TF':        
         for i in range(len(data)):
             result = TF_PO.NER_PO(articleType, data.iloc[i, :])
-            time.append(data.iloc[i, 2])
-            title.append(result[0])
+            time.append(data.date[i])
+            title.append(data.title[i])
             orgnization.append(result[1][0])
             person.append(result[1][1])
             relation.append(result[1][2])
@@ -67,8 +67,8 @@ def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentM
     if method ==  'BosonNLP_PO':        
         for i in range(len(data)):
             result = BosonNLP_PO.NER_PO(articleType, data.iloc[i, :])
-            time.append(data.iloc[i, 2])
-            title.append(result[0])
+            time.append(data.date[i])
+            title.append(data.title[i])
             orgnization.append(result[1][0])
             person.append(result[1][1])
             relation.append(result[1][2])
@@ -114,6 +114,7 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
 if __name__ == '__main__':
     import pandas as pd
     data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
+    #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]
     data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'])
     data_keywords =  extract_keywords(data, param_grid['articleType'])
     data_entity.to_csv('./models/test/out_entity.csv')

@@ -19,6 +19,22 @@ from models.zh_ner_tf.main import *
 from platform import python_version
 print(python_version())
 
+def remove_text(text, type='number'):
+    """
+    从文本中移除特定文本，例如数字或标点
+
+    :param text: 文本
+    :param type: 移除的文本类型, 可选'number', 'punc', 'both'
+    :return: 移除后的文本
+    """
+    from zhon.hanzi import punctuation
+    import string
+    #text = re.sub("<>".format(punctuation, string.punctuation), " ", text)
+    text = re.sub('<.*?>', '', text)
+    text = re.sub('[.*?]', '', text)
+    text = re.sub('([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&amp;:/~\+#]*[A-Z\-\@?^=%&amp;/~\+#]){2,6}?', '', text)
+
+    return text
 
 def NER_PO(articleType, data, contentMode=[1, 1, 0],
            useExpanded=[1, 0, 1], accurateMode=False, dirName='outputs'):
@@ -40,12 +56,15 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
     StanfordTagger = StanfordNERTagger('./dictionary/stanford-ner-2014-08-27/classifiers/english.all.3class.distsim.crf.ser.gz','./dictionary/stanford-ner-2014-08-27/stanford-ner.jar')
     titleList = createDict('./dictionary/titles.txt')
     loadDicts(investKeyWords + cooporationKeyWords)
-    title = data[0] # 需要注意导入的数据情况哦！
-    content = data[1]
+    title = data['title'] # 需要注意导入的数据情况哦！
+    content = data['content']
+    # 清楚content里面的一些json 格式（专门为acticles_1000）
+    content = remove_text(content)
     if articleType == 'AIDaily':
         description = ''
     else: 
-        description = data[2]
+        description = data['description']
+        description = remove_text(description)
         
     def helper(title, content, description, contentMode, useExpanded, accurateMode):
         sentences = splitSentence(title, content, description, contentMode)
@@ -63,7 +82,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                     if ele not in peopleList:
                         peopleList.append(ele)
             for ele in org_0:
-                if not re.findall('[/, =,[(],[)],《]', ele):
+                if not re.findall('[/, =,(,),《]', ele):
                     if ele not in orgList:
                         orgList.append(ele)
             
@@ -232,7 +251,7 @@ if __name__ == '__main__':
     relation = []
     for i in range(len(data)):
         result = NER_PO('AIDaily', data.iloc[i, :])
-        time.append(data.iloc[i, 2])
+        time.append(data.date[i])
         title.append(result[0])
         orgnization.append(result[1][0])
         person.append(result[1][1])
