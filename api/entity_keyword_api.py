@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jun 17 13:51:49 2019
@@ -10,12 +10,11 @@ Created on Mon Jun 17 13:51:49 2019
 import sys
 import flask
 import os
-#os.chdir('/Users/rain/todo-api/flask/duty') 
-sys.path.append('..')
 import main
 import pandas as pd
 from flask import request, jsonify
-data = pd.read_csv('/Users/rain/Desktop/aidaily_articles.csv').iloc[:3,:]
+data_ai = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
+data_1000 = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -35,7 +34,11 @@ def api_query_entity():
         articleType = query
     else:
         articleType = 'AIDaily'
-    new_data = main.extract_entity(data, articleType)
+        
+    if articleType == 'AIDaily':
+        new_data = main.extract_entity(data_ai, articleType)
+    else:
+        new_data = main.extract_entity(data_1000, articleType)
     for i in range(len(new_data)):
         #dic = new_data.iloc[i,:].to_dict(orient = 'dict')  将dataframe转换成dic
         dic = new_data.iloc[i,:].to_dict()  # 将series转成dic 输出
@@ -54,7 +57,11 @@ def api_query_keyword():
         articleType = query
     else:
         articleType = 'AIDaily'
-    new_data = main.extract_keywords(data,articleType, cut_method='tfidf', top_k=5, normalize_title_content=True)
+    if articleType == 'AIDaily':
+        new_data = main.extract_keywords(data_ai,articleType, cut_method='tfidf', top_k=5, normalize_title_content=True)
+    else:
+        new_data = main.extract_keywords(data_1000,articleType, cut_method='tfidf', top_k=5, normalize_title_content=True)
+
     for i in range(len(new_data)):
         #dic = new_data.iloc[i,:].to_dict(orient = 'dict')  将dataframe转换成dic
         dic = new_data.iloc[i,:].to_dict()  # 将series转成dic 输出
