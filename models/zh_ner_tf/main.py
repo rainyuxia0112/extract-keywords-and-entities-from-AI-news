@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import tensorflow as tf
-tf.reset_default_graph()
+#tf.reset_default_graph()
 import numpy as np
 import sys  
 import os, argparse, time, random

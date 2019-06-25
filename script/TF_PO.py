@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*
 #from pyltp import SentenceSplitter
 import jieba.posseg as pseg
+import tensorflow as tf
 from nltk.tag.stanford import StanfordNERTagger
 import sys
 import os
