@@ -48,10 +48,10 @@ FLASK_APP=entity_keyword_api.py flask run #也可以直接使用python3 entity_k
 
 
 |URL|Method|Return
-|----|-----|
-|*http://127.0.0.1:5000/*|GET| |
-|*http://127.0.0.1:5000/api/resources/keywords*|GET|json格式的分析结果|
-|*http://127.0.0.1:5000/api/resources/entity*|GET|json格式的分析结果|
+|----|--------|----
+|*http://127.0.0.1:5000/*|GET|
+|*http://127.0.0.1:5000/api/resources/keywords*|GET|json格式的分析结果
+|*http://127.0.0.1:5000/api/resources/entity*|GET|json格式的分析结果
 
 
     斜体、粗体、删除线可混合使用
