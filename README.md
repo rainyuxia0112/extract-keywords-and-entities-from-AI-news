@@ -78,6 +78,7 @@ param_grid = {'articleType':'AIDaily', # 新闻类型
               'method' : 'zh_NER_TF', # method to deal with entity
               'contentMode' : [1, 1, 0],
               'useExpanded' : [1, 0, 1],
+              'similarity' : 50,
               'title_weight': 0.8, #标题所占比重
               'cut_method': 'tfidf',
               'top_k': 5, # 每篇新闻选择多少个关键词

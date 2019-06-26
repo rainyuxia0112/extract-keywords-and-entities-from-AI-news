@@ -30,6 +30,7 @@ param_grid = {'articleType':'AIDaily',
               'method' : 'zh_NER_TF',
               'contentMode' : [1, 1, 0],
               'useExpanded' : [1, 0, 1],
+              'similarity' : 50,
               'title_weight': 0.8,
               'cut_method': 'tfidf', 
               'top_k': 5, 
@@ -38,7 +39,7 @@ param_grid = {'articleType':'AIDaily',
         }
 
 def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentMode=[1, 1, 0],
-           useExpanded=[1, 0, 1], accurateMode=False, dirName='outputs'): 
+           useExpanded=[1, 0, 1], accurateMode=False, similarity = 50, dirName='outputs'): 
     '''
     输入一个dataframe（csv文件），输出一个新的dataframe（其中包含所有每一条新闻的entity
     input:  articleType: string, 'AIDaily' or other, case insensitive; 目前使用的是aidaily 的数据csv
@@ -57,7 +58,8 @@ def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentM
     relation = []
     if method ==  'zh_NER_TF':        
         for i in range(len(data)):
-            result = TF_PO.NER_PO(articleType, data.iloc[i, :])
+            result = TF_PO.NER_PO(articleType, data.iloc[i, :], contentMode=[1, 1, 0],
+           useExpanded=[1, 0, 1], accurateMode=False, similarity = 50)
             time.append(data.date[i])
             title.append(data.title[i])
             orgnization.append(result[1][0])
@@ -66,7 +68,8 @@ def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentM
             print (i)
     if method ==  'BosonNLP_PO':        
         for i in range(len(data)):
-            result = BosonNLP_PO.NER_PO(articleType, data.iloc[i, :])
+            result = BosonNLP_PO.NER_PO(articleType, data.iloc[i, :], contentMode=[1, 1, 0],
+           useExpanded=[1, 0, 1], accurateMode=False, similarity = 50)
             time.append(data.date[i])
             title.append(data.title[i])
             orgnization.append(result[1][0])
@@ -114,8 +117,9 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
 if __name__ == '__main__':
     import pandas as pd
     data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
-    #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]
-    data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'])
+    #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]     
+    data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
+                                 param_grid['useExpanded'], param_grid['similarity'])
     data_keywords =  extract_keywords(data, param_grid['articleType'])
     data_entity.to_csv('./models/test/out_entity.csv')
     data_keywords.to_csv('./models/test/out_keywords.csv')

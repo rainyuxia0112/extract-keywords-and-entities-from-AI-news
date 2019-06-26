@@ -19,12 +19,13 @@ print(python_version())
 
 # from loadTools import *
 def NER_PO(articleType, data, contentMode=[1, 1, 0],
-           useExpanded=[1, 0, 1], accurateMode=False, dirName='outputs'):
+           useExpanded=[1, 0, 1], accurateMode=False, similarity = 50, dirName='outputs'):
     '''
     input:  articleType: string, 'AIDaily' or other, case insensitive; 目前使用的是aidaily 的数据csv
             contentMode: list of int, 1 for use, 0 for ignore. 3 digits stand for: [title, content, description] 
             useExpanded: whether or not to use expanded words, 1 for use, 0 for not, 3 digits stand for: [organization, people, undefined]
             accurateMode: whether or not to use StanfordNERTagger, which is more accurate but computationaly more expensive.
+            similarity: 允许同一个entity组内最多可以出现多少相似度的词
             dirName: string, deafult to 'test.txt'
     output: list
 
@@ -46,7 +47,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
     #nlp = BosonNLP('Q-VXkanb.33198.7UaoJU9ozS-n')
     nlp = BosonNLP('Cpcr3Wym.33210.xQpBxPaHIXmi')
 
-    def helper(title, content, description, contentMode, useExpanded, accurateMode):
+    def helper(title, content, description, contentMode, useExpanded, accurateMode, similarity):
         sentences = splitSentence(title, content, description, contentMode)
         #sentences = list(SentenceSplitter.split(title+content+description))
         peopleList = []
@@ -116,7 +117,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
             if len(peopleList) > 1:
                 for ele in peopleList:
                     extract = process.extract(ele, peopleList, limit=2)
-                    if extract[1][1] >50:
+                    if extract[1][1] > similarity:
                         if len(ele) <= len(extract[1][0]):
                             peopleList.remove(extract[1][0])
                         else:
@@ -124,7 +125,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
             if len(orgList) > 1:
                 for ele in orgList:
                     extract = process.extract(ele, orgList, limit=2)
-                    if extract[1][1] >50:
+                    if extract[1][1] > similarity:
                         if len(ele) <= len(extract[1][0]):
                             orgList.remove(extract[1][0])
                         else:
@@ -188,7 +189,7 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
         ##
         return [title, writeList1, writeList2]
         ##
-    l = helper(title, content, description, contentMode, useExpanded, accurateMode)  # l 为最后输出的关系
+    l = helper(title, content, description, contentMode, useExpanded, accurateMode, similarity)  # l 为最后输出的关系
     return (l)
 
 
