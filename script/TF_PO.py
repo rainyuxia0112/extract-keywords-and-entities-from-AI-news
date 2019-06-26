@@ -79,11 +79,11 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
             tf.reset_default_graph() #引入reset_default_graph() 使得 zh_ner_master 重置 导出一个错误的部分，不要对这个部分进行改动 
             people_0, loc_0, org_0 = zh_NER_TF_master(title+content+description)
             for ele in people_0:
-                if not re.findall('[/, =,(,),《]', ele):
+                if not re.findall('[/, =,(,),《, 》]', ele):
                     if ele not in peopleList:
                         peopleList.append(ele)
             for ele in org_0:
-                if not re.findall('[/, =,(,),《]', ele):
+                if not re.findall('[/, =,(,),《, 》]', ele):
                     if ele not in orgList:
                         orgList.append(ele)
             

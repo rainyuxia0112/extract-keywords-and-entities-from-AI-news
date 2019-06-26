@@ -99,12 +99,12 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                     words[i][1] = tagInterpret[engTagging(expandedWord, accurateMode, StanfordTagger)]
                     if words[i][1] == 'PEO':
                         if words[i][0] not in peopleList:
-                            if not re.findall('[/, =,《,》]', words[i][0]):
+                            if not re.findall('[/, =,《,》,（, ）]', words[i][0]):
                                 peopleList.append(words[i][0])
                                 titleDict[expandedWord.strip()] = []
                     if words[i][1] == 'ORG':
                         if words[i][0] not in orgList:
-                            if not re.findall('[/, =,《]', words[i][0]):
+                            if not re.findall('[/, =,《, 》,（, ）]', words[i][0]):
                                 orgList.append(words[i][0])
                     i = end
                 elif word in investKeyWords+cooporationKeyWords:

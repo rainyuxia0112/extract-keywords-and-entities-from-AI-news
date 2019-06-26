@@ -121,5 +121,5 @@ if __name__ == '__main__':
     data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
                                  param_grid['useExpanded'], param_grid['similarity'])
     data_keywords =  extract_keywords(data, param_grid['articleType'])
-    data_entity.to_csv('./models/test/out_entity.csv')
-    data_keywords.to_csv('./models/test/out_keywords.csv')
+    #data_entity.to_csv('./models/test/out_entity.csv')
+    #data_keywords.to_csv('./models/test/out_keywords.csv')

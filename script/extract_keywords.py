@@ -102,7 +102,7 @@ def cal_keywords_weight(title_weight_list, content_weight_list, top_k=5, title_w
     for i in range(len(keyword_weight_list)):
         curr_key_value_list = [[k,v] for k, v in keyword_weight_list[i].items() if v > 0]  # 去掉关键词权重为0的关键字
         curr_key_list = sorted(curr_key_value_list, key=lambda k:k[1], reverse=True)[:min(top_k,len(curr_key_value_list))]    # 按 weight 讲叙排序
-        keyword_weight_list[i] = ','.join([item[0] for item in curr_key_list])
+        keyword_weight_list[i] = [item[0] for item in curr_key_list]
     return keyword_weight_list
 
 
