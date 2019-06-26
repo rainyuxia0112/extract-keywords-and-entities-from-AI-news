@@ -42,22 +42,11 @@ FLASK_APP=entity_keyword_api.py flask run #也可以直接使用python3 entity_k
 
 ### API接口
 
-通过修改 link： ```http://127.0.0.1:5000/```  完成参数的选择。
-输入网址：```http://127.0.0.1:5000/```进入主页；```http://127.0.0.1:5000/api/resources/keywords```进入关键词Api网页；```http://127.0.0.1:5000/api/resources/entity```进入主题主体Api网页；
-
-
-
 |URL|Method|Return
 |----|--------|----
 |*http://127.0.0.1:5000/*|GET|
 |*http://127.0.0.1:5000/api/resources/keywords*|GET|json格式的分析结果
 |*http://127.0.0.1:5000/api/resources/entity*|GET|json格式的分析结果
-
-
-    斜体、粗体、删除线可混合使用
-
-
-
 
 # Contributors
 [Mos Zhang](https://github.com/mosroot), [Yu Xia](https://github.com/rainyuxia0112)
