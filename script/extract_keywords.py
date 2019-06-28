@@ -18,6 +18,35 @@ if stop_words_path is not None:
     jieba.analyse.set_stop_words(stop_words_path)  # 加载停用词文件
     stopwords_set = set([x.strip() for x in open(stop_words_path).readlines()])
 
+
+stop_words_path = './dictionary/black.txt'
+stopwords_black = ()
+if stop_words_path is not None:
+    jieba.analyse.set_stop_words(stop_words_path)  # 加载黑名单
+    stopwords_black = [x.strip() for x in open(stop_words_path).readlines()]
+    
+
+def is_number(s):
+    '''
+    检查输入的文本是不是一个数字型
+    '''
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+ 
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+ 
+    return False
+
+
+
 def remove_text(text, type='number'):
     """
     从文本中移除特定文本，例如数字或标点
@@ -103,6 +132,13 @@ def cal_keywords_weight(title_weight_list, content_weight_list, top_k=5, title_w
         curr_key_value_list = [[k,v] for k, v in keyword_weight_list[i].items() if v > 0]  # 去掉关键词权重为0的关键字
         curr_key_list = sorted(curr_key_value_list, key=lambda k:k[1], reverse=True)[:min(top_k,len(curr_key_value_list))]    # 按 weight 讲叙排序
         keyword_weight_list[i] = [item[0] for item in curr_key_list]
+        for ele in keyword_weight_list[i]:         #去掉数字型的关键词
+            if is_number(ele):
+                keyword_weight_list[i].remove(ele)
+            elif ele[-3:-1] in stopwords_black:
+                keyword_weight_list[i].remove(ele)
+            
+        
     return keyword_weight_list
 
 

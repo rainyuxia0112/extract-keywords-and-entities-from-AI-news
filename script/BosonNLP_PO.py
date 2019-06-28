@@ -17,6 +17,16 @@ from platform import python_version
 print(python_version())
 
 
+# 查看当前路径位置
+os.getcwd()
+stop_words_path = './dictionary/black.txt'
+stopwords_set = ()
+if stop_words_path is not None:
+    jieba.analyse.set_stop_words(stop_words_path)  # 加载黑名单
+    stopwords_set = [x.strip() for x in open(stop_words_path).readlines()]
+
+
+
 # from loadTools import *
 def NER_PO(articleType, data, contentMode=[1, 1, 0],
            useExpanded=[1, 0, 1], accurateMode=False, similarity = 50, dirName='outputs'):
@@ -98,13 +108,13 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                         continue
                     words[i][1] = tagInterpret[engTagging(expandedWord, accurateMode, StanfordTagger)]
                     if words[i][1] == 'PEO':
-                        if words[i][0] not in peopleList:
-                            if not re.findall('[/, =,《,》,（, ）]', words[i][0]):
+                        if words[i][0] not in peopleList+stopwords_set:
+                            if not re.findall('[/, 。,(,),《, 》, ）, （]', words[i][0]):
                                 peopleList.append(words[i][0])
                                 titleDict[expandedWord.strip()] = []
                     if words[i][1] == 'ORG':
-                        if words[i][0] not in orgList:
-                            if not re.findall('[/, =,《, 》,（, ）]', words[i][0]):
+                        if words[i][0] not in orgList+stopwords_set:
+                            if not re.findall('[/, 。,(,),《, 》, ）, （]', words[i][0]):
                                 orgList.append(words[i][0])
                     i = end
                 elif word in investKeyWords+cooporationKeyWords:
@@ -112,24 +122,6 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                     i += 1
                 else:
                     i += 1
-            
-            #对peopleList 与 orgList 中的element 进行整理，删除掉相关性比较高的其中几个
-            if len(peopleList) > 1:
-                for ele in peopleList:
-                    extract = process.extract(ele, peopleList, limit=2)
-                    if extract[1][1] > similarity:
-                        if len(ele) <= len(extract[1][0]):
-                            peopleList.remove(extract[1][0])
-                        else:
-                            peopleList.remove(ele)
-            if len(orgList) > 1:
-                for ele in orgList:
-                    extract = process.extract(ele, orgList, limit=2)
-                    if extract[1][1] > similarity:
-                        if len(ele) <= len(extract[1][0]):
-                            orgList.remove(extract[1][0])
-                        else:
-                            orgList.remove(ele)
 
             currPEOList = [[(i, i+1), words[i][0]] for i in range(len(words)) if words[i][1] == 'PEO']
             currTTLList = [[(i, i+1), words[i][0]] for i in range(len(words)) if words[i][1] == 'TTL']
@@ -174,6 +166,48 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
                 if tag in ('v', 'vd', 'vshi', 'vyou', 'vl', 'vi'):
                     prevVerb += word
                 i += 1
+        
+        
+        # 在peoplelist 与 orglist添加完毕后，需要进行删除
+        #比较peoplelist 与 orglist的词（将相关性过强的词删除）
+        if len(peopleList) > 1:
+            for ele in peopleList:
+                extract = process.extract(ele, peopleList, limit=2)
+                if extract[1][1] > similarity:
+                    if 2 < len(ele) <= len(extract[1][0]):
+                        peopleList.remove(extract[1][0])
+                    else:
+                        peopleList.remove(ele)
+        if len(orgList) > 1:
+            for ele in orgList:
+                extract = process.extract(ele, orgList, limit=2)
+                if extract[1][1] > similarity:
+                    if 2 < len(ele) <= len(extract[1][0]):
+                        orgList.remove(extract[1][0])
+                    else:
+                        orgList.remove(ele)
+        
+        # 排除过长或者过短的词，如果遇到与或者和就拆开，如果遇到公司两个字就只要前几个
+        for ele in peopleList:
+            if (len(ele) > 10 or len(ele) < 2):
+                peopleList.remove(ele)
+
+    
+        
+        for ele in orgList:
+            if (len(ele) > 30 or len(ele) < 3):
+                orgList.remove(ele)
+            elif re.findall('[与和]', ele):
+                ele_new = re.split('[与和]', ele)
+                for i in ele_new:              #保证拆分是有意义的
+                    if len(i) <2:
+                        ele_new.remove(i)
+                orgList.remove(ele)
+                orgList = orgList+ele_new
+            elif ele.find('公司') > 0:      #如果找不到会返回-1 ！！
+                orgList.remove(ele)
+                orgList.append(ele[:ele.find('公司')+2])
+        
         relationDict = dict(relationDict)   #改变datatype 方便之后打印出来
         writeList1 = [orgList, peopleList, relationDict]
         writeList2 = ['机构', '人物', '人物机构关系对']

@@ -136,7 +136,7 @@ def check_similar(list1, list2):
                 else:
                    list3.append(extract[0][0]) 
     else:
-        list3 = list2
+        list3 = []
     return (list3)
                     
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     new_keywords = list(map(check_similar, L, list(data_keywords['keywords'])))
     
     #data_keywords['keywords'] = new_keywords
-    data_keywords.to_csv('new_keyword.csv')
+    data_keywords.to_csv('./models/test/new_keyword.csv')   #经过交叉分析后的keywords
 
     
     

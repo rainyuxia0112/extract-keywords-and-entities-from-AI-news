@@ -18,6 +18,8 @@ import re
 import numpy as np
 import jieba
 import jieba.analyse
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 #os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
 # 查看当前路径位置
 os.getcwd() 
@@ -111,15 +113,40 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
     
     return (df)
 
+def check_similar(list1, list2):
+    '''
+    对比两组list的相似度
+    '''
+    list3 = []
+    if len(list1) >0:
+        for ele in list1:
+            extract = process.extract(ele, list2, limit = 1)
+            if extract[0][1] > 80:
+                if len(ele) > 2:
+                    list3.append(ele)
+                else:
+                   list3.append(extract[0][0]) 
+    else:
+        list3 = []
+    return (list3)
+
 #小小测试
 #new_= extract_entity(data, method = 'zh_NER_TF')
 #测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
 if __name__ == '__main__':
     import pandas as pd
-    data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10,:]
+    data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[100: ,:].reset_index()
     #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]     
     data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
                                  param_grid['useExpanded'], param_grid['similarity'])
-    data_keywords =  extract_keywords(data, param_grid['articleType'])
+    data_keywords =  extract_keywords(data, param_grid['articleType'], param_grid['title_weight'],
+                                      param_grid['cut_method'], param_grid['top_k'], param_grid['normalize_title_content'])
     #data_entity.to_csv('./models/test/out_entity.csv')
     #data_keywords.to_csv('./models/test/out_keywords.csv')
+    L = []
+    for i in range(len(data_entity)):
+        L.append(data_entity['机构'][i]+data_entity['人物'][i])      
+    new_keywords = list(map(check_similar, L, list(data_keywords['keywords'])))
+    
+    #data_keywords['keywords'] = new_keywords
+    #data_keywords.to_csv('./models/test/out_new_keyword.csv')   #经过交叉分析后的keywords
