@@ -18,12 +18,12 @@ if stop_words_path is not None:
     jieba.analyse.set_stop_words(stop_words_path)  # 加载停用词文件
     stopwords_set = set([x.strip() for x in open(stop_words_path).readlines()])
 
-
+# 导入黑名单
 stop_words_path = './dictionary/black.txt'
 stopwords_black = ()
 if stop_words_path is not None:
-    jieba.analyse.set_stop_words(stop_words_path)  # 加载黑名单
     stopwords_black = [x.strip() for x in open(stop_words_path).readlines()]
+ 
     
 
 def is_number(s):
@@ -74,7 +74,6 @@ def get_keywords(text_list, cut_method='tfidf', normalize_title_content=True):
     :param normalize_title_content: 是否对关键字权重进行归一化
     :return: 关键字及其对应权重
     """
-
     corpus = ['' for i in range(len(text_list))]
     for i, text in enumerate(text_list):
         text = str(text)
@@ -131,14 +130,8 @@ def cal_keywords_weight(title_weight_list, content_weight_list, top_k=5, title_w
     for i in range(len(keyword_weight_list)):
         curr_key_value_list = [[k,v] for k, v in keyword_weight_list[i].items() if v > 0]  # 去掉关键词权重为0的关键字
         curr_key_list = sorted(curr_key_value_list, key=lambda k:k[1], reverse=True)[:min(top_k,len(curr_key_value_list))]    # 按 weight 讲叙排序
-        keyword_weight_list[i] = [item[0] for item in curr_key_list]
-        for ele in keyword_weight_list[i]:         #去掉数字型的关键词
-            if is_number(ele):
-                keyword_weight_list[i].remove(ele)
-            elif ele[-3:-1] in stopwords_black:
-                keyword_weight_list[i].remove(ele)
-            
-        
+        keyword_weight_list[i] = [item[0] for item in curr_key_list if (not is_number(item[0]) and item[0][-2:] not in stopwords_black)] #去掉数字型的关键词
+                   
     return keyword_weight_list
 
 

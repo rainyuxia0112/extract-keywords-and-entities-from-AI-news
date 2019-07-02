@@ -20,7 +20,8 @@ import jieba
 import jieba.analyse
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-#os.chdir('/Users/rain/todo-api/flask/duty')  #这里我改变了路径进入到指定的最大的文件夹中（若使用需要手动调整到自己的路径！！！）
+import pandas as pd
+
 # 查看当前路径位置
 os.getcwd() 
 #引入三个脚本
@@ -28,6 +29,7 @@ import script.TF_PO as TF_PO
 from script.extract_keywords import *
 import script.BosonNLP_PO as BosonNLP_PO
 
+# 参数设置
 param_grid = {'articleType':'AIDaily',
               'method' : 'zh_NER_TF',
               'contentMode' : [1, 1, 0],
@@ -39,6 +41,38 @@ param_grid = {'articleType':'AIDaily',
               'normalize_title_content': True
               
         }
+
+
+
+
+def add_dict(text_list):
+    """
+    找到在（） 或者「」 或者《》内的词语并加入jieba dictionary 中，为分词做准备
+    return - dic 是一个list，包含了在（） 或者「」 或者《》内的词语
+    """  
+    # 导入jieba cut词
+    dict_path = './dictionary/dict.txt'
+    dict_set = ()
+    if dict_path is not None:
+        dict_set = [x.strip() for x in open(dict_path).readlines()]  # dict_set 是分词词典
+    diction = []    
+    for text in (text_list):
+        text = str(text)
+        p1 = re.compile(r'[(](.*?)[)]', re.S)  #最小匹配
+        p2 = re.compile(r'「(.*?)」', re.S)  #最小匹配
+        p3 = re.compile(r'《(.*?)》', re.S)  #最小匹配
+        add = re.findall(p1, text)
+        add = add + (re.findall(p2, text))
+        add = add + (re.findall(p3, text))
+        add = [ele for ele in add if (len(ele) < 20 and ele+' 1' not in dict_set)]
+        file = open("./dictionary/dict.txt","a") 
+        for string in add:
+            diction.append(string)
+            file.write(string+' 1'+'\n')
+    file.close()     
+    return (diction)
+    
+
 
 def extract_entity(data, articleType = 'AIDaily', method = 'zh_NER_TF', contentMode=[1, 1, 0],
            useExpanded=[1, 0, 1], accurateMode=False, similarity = 50, dirName='outputs'): 
@@ -115,7 +149,7 @@ def extract_keywords(data, articleType, title_weight=0.8, cut_method='tfidf', to
 
 def check_similar(list1, list2):
     '''
-    对比两组list的相似度
+    对比两组list的相似度, 将相似度较高和在dict_title中的词提取出来
     '''
     list3 = []
     if len(list1) >0:
@@ -127,20 +161,27 @@ def check_similar(list1, list2):
                 else:
                    list3.append(extract[0][0]) 
     else:
-        list3 = []
+        list3 = []  
+    list3 = list(set(list3).union(set(list2).intersection(dic_title)))    
     return (list3)
 
 #小小测试
 #new_= extract_entity(data, method = 'zh_NER_TF')
 #测试 运用 dailynew 测试,未删除依然保留（仅测试作用）
 if __name__ == '__main__':
-    import pandas as pd
-    data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[100: ,:].reset_index()
-    #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]     
-    data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
-                                 param_grid['useExpanded'], param_grid['similarity'])
+    data = pd.read_csv('./models/test/aidaily_articles.csv').iloc[:10 ,:].reset_index()
+    #data = pd.read_csv('./models/test/articles_1000.csv').iloc[:10,:]  
+    # 补充分词词库
+    dic_title = add_dict(data['title'])    # 找到在（） 或者「」 或者《》内的词语
+    dic_content = add_dict(data['content']) # # 找到在（） 或者「」 或者《》内的词语
+    # 加载自定义词库
+    jieba.load_userdict('./dictionary/dict.txt')   
     data_keywords =  extract_keywords(data, param_grid['articleType'], param_grid['title_weight'],
                                       param_grid['cut_method'], param_grid['top_k'], param_grid['normalize_title_content'])
+    
+    data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
+                                 param_grid['useExpanded'], param_grid['similarity'])
+    
     #data_entity.to_csv('./models/test/out_entity.csv')
     #data_keywords.to_csv('./models/test/out_keywords.csv')
     L = []

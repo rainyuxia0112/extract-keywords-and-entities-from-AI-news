@@ -29,6 +29,11 @@ if stop_words_path is not None:
     jieba.analyse.set_stop_words(stop_words_path)  # 加载黑名单
     stopwords_set = [x.strip() for x in open(stop_words_path).readlines()]
 
+# 导入技术词库
+tech_path = './dictionary/tech.txt'
+tech_set = ()
+if tech_path is not None:
+    tech_set = [x.strip() for x in open(tech_path).readlines()]
 
 
 def NER_PO(articleType, data, contentMode=[1, 1, 0],
@@ -241,6 +246,11 @@ def NER_PO(articleType, data, contentMode=[1, 1, 0],
             elif ele.find('公司') > 0:      #如果找不到会返回-1 ！！
                 orgList.remove(ele)
                 orgList.append(ele[:ele.find('公司')+2])
+        
+        orgList = list(set(orgList).difference(set(tech_set)))  # 去掉技术词 取差集
+        peopleList = list(set(peopleList).difference(set(tech_set)))  # 人物去掉tech里面的词
+        peopleList = list(set(peopleList).difference(set(orgList)))  # 人物去掉org里面的词
+        
 
 
         #writeList1 = [orgList, titleDict, relationList]
