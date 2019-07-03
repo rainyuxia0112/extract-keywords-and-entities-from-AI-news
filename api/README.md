@@ -11,7 +11,7 @@
 * 请在terminal中重新激活一个独立开发环境用于此任务
 
 ```shell
-source ./bin/activate   # 或者使用. ./bin/activate  # 服务器上的环境名称叫py
+source ./bin/activate   # 或者使用. ./bin/activate  # 服务器上的环境位置：/home/rain/flask/py
 ```
 
 - 安装依赖
@@ -23,9 +23,9 @@ pip3 install -r requirement.txt # 该任务的requirement在api文件夹中
 
 - 执行下列命令，运行脚本
 ```shell
-FLASK_APP=entity_keyword_api.py flask run #也可以直接使用python3 entity_keyword_api.py
+FLASK_APP=entity_keyword_api.py flask run #也可以直接使用 python3 entity_keyword_api.py
 * Serving Flask app "entity_keyword_api"
-* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+* Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
 ```
 
 # 运行说明
@@ -44,9 +44,9 @@ FLASK_APP=entity_keyword_api.py flask run #也可以直接使用python3 entity_k
 
 |URL|Method|Return
 |----|--------|----
-|*http://127.0.0.1:5000/*|GET|
-|*http://127.0.0.1:5000/api/resources/keywords*|GET|json格式的分析结果
-|*http://127.0.0.1:5000/api/resources/entity*|GET|json格式的分析结果
+|*http://144.202.28.242:80/*|GET|
+|*http://144.202.28.242/api/resources/keywords:80*|GET|json格式的keywords分析结果
+|*http://144.202.28.242/api/resources/entity:80*|GET|json格式的entity分析结果
 
 # Contributors
 [Mos Zhang](https://github.com/mosroot), [Yu Xia](https://github.com/rainyuxia0112)
