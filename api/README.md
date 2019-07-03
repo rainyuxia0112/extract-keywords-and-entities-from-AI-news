@@ -14,6 +14,17 @@
 source ./bin/activate   # 或者使用. ./bin/activate
 ```
 
+* 在安装前请在terminal执行以下代码，确认在python3.5环境下
+
+```shell
+apt-get install python3.5-dev
+```
+
+* 配置flask实际生产运行环境
+```shell
+pip install uwsgi
+```
+
 - 安装依赖
 
 ```shell

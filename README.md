@@ -34,9 +34,12 @@ nltk.download('words')
 
 ```python
 dict_dir = './dictionary'  # 包含所需用到的所有词典
-stop_words_path = './dictionary/stop_words.dat'  # 停用词文件路径
 test = './models/test' # 包含所有测试用的数据，在进行脚本时，可以将新数据放在该位置
-data = './models/test/aidaily_articles.csv'  # 输入 csv 路径
+data = './models/test/aidaily_articles.csv'  # 输入 csv 路径（input,可以变，新的数据直接放到该位置改名即可）
+stop_words_path = './dictionary/stop_words.dat'  # 停用词文件路径
+black_txt = './dictionary/black_txt' # 所有词汇黑名单
+tech_txt = './dictionary/tech_txt' # 技术词库
+dict_txt = './dictionary/dict_txt' # jieba的切分词表
 topN = 5  # 每篇文章保留前5个关键词
 ```
 
@@ -49,11 +52,11 @@ python3 main.py #也可以直接使用python main.py
 
 ### 项目结构说明
 
-[models](code) 为该项目的源代码和主要模型搭建。
+[models](https://github.com/rainyuxia0112/duty/tree/master/models) 为该项目的源代码和主要模型搭建。
 
-[script](script) 为提取关键词和提取主题主体词脚本。
+[script](https://github.com/rainyuxia0112/duty/tree/master/script) 为提取关键词和提取主题主体词脚本。
 
-[test](test) 存放输入文件和输出文件。
+[test](https://github.com/rainyuxia0112/duty/tree/master/models/test) 存放输入文件和输出文件。
 
 ### 输入文件格式要求
 
@@ -67,8 +70,8 @@ python3 main.py #也可以直接使用python main.py
 
 输出的 csv 文件在 test 目录中，并包含以下两个csv文件：
 - **out_entity.csv**
-- **out_keywords.csv**
-
+- **out_keywords.csv**   # 这个是没有将entity与keywords交叉补充的原keywords表
+- **out_new_keywords.csv**   # 这个是将entity与keywords交叉补充的新keywords表
 
 ### 参数选择
 
