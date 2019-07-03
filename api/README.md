@@ -11,18 +11,7 @@
 * 请在terminal中重新激活一个独立开发环境用于此任务
 
 ```shell
-source ./bin/activate   # 或者使用. ./bin/activate
-```
-
-* 在安装前请在terminal执行以下代码，确认在python3.5环境下
-
-```shell
-apt-get install python3.5-dev
-```
-
-* 配置flask实际生产运行环境
-```shell
-pip install uwsgi
+source ./bin/activate   # 或者使用. ./bin/activate  # 服务器上的环境名称叫py
 ```
 
 - 安装依赖
