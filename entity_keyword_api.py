@@ -109,7 +109,7 @@ def api_query_keyword():
 
 if __name__== '__main__':
     app.run(
-        host = '144.202.28.242',
+        host = '0.0.0.0',
         port = 80,  
         debug = False)
 
