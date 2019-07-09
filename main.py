@@ -182,12 +182,12 @@ if __name__ == '__main__':
     data_entity = extract_entity(data, param_grid['articleType'], param_grid['method'], param_grid['contentMode'],
                                  param_grid['useExpanded'], param_grid['similarity'])
     
-    #data_entity.to_csv('./models/test/out_entity.csv')
-    #data_keywords.to_csv('./models/test/out_keywords.csv')
+    data_entity.to_csv('./models/test/out_entity.csv')
+    data_keywords.to_csv('./models/test/out_keywords.csv')
     L = []
     for i in range(len(data_entity)):
         L.append(data_entity['机构'][i]+data_entity['人物'][i])      
     new_keywords = list(map(check_similar, L, list(data_keywords['keywords'])))
     
-    #data_keywords['keywords'] = new_keywords
-    #data_keywords.to_csv('./models/test/out_new_keyword.csv')   #经过交叉分析后的keywords
+    data_keywords['keywords'] = new_keywords
+    data_keywords.to_csv('./models/test/out_new_keyword.csv')   #经过交叉分析后的keywords
