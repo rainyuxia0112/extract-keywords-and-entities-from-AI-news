@@ -7,7 +7,7 @@ This duty is to extract keywords and entities based on AI news
 
 - 安装前准备 Before runnning
 
-* 此任务需要在python3.X环境下进行，请将默认的python版本调整至3.X  (this duty needs tobe done in python3.X environment)
+* 此任务需要在python3.X环境下进行，请将默认的python版本调整至3.X  (this duty needs to be done in python3.X environment)
 
 * 请在terminal中重新激活一个独立开发环境用于此任务 (activate a new python enviroment)
 
@@ -98,14 +98,18 @@ param_grid = {'articleType':'AIDaily', # 新闻类型
 - ```extract_keywords.py```
 
 基于```机器之心```的脚本，使用tfidf方法提取文章的关键词。脚本使用文章的```title```和```content```信息进行分析，加以不同权重，输出分数高的前几个关键词。
+Based on AI news, we use tfidf to extract keywords from acticles; this script uses title and content from acticles to do analysis.
 
 - ```TF_PO.py```
 
 使用```zh-NER-TF```：脚本使用文章的```title```和```content```信息进行分析，输出信息包含：新闻标题，新闻中包含的人物，机构，人物机构关系。（该脚本的使用需要改动输入的csv，目前使用的是aidaily)。
+Based on AI news, we use LSTM to extract entities from acticles; this script uses title and content from acticles to do analysis.
 
 - ```BosonNLP_PO```
 
 使用```BosonNLP```：脚本使用文章的```title```和```content```信息进行分析，输出信息包含：新闻标题，新闻中包含的人物，机构，人物机构关系。（该脚本的使用需要改动输入的csv，目前使用的是aidaily)。
+
+this is an Api to extract entities from acticles
 
 - ```main```
 
