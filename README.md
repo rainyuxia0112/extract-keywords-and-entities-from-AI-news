@@ -104,4 +104,4 @@ Based on AI news, we use LSTM to extract entities from acticles; this script use
 this is an Api to extract entities from acticles
 
 # Contributors
-[Mos Zhang](https://github.com/mosroot), [Yu Xia](https://github.com/rainyuxia0112)
+[Penghui Wei](https://github.com/Determined22/zh-NER-TF/), [Yu Xia](https://github.com/rainyuxia0112)
