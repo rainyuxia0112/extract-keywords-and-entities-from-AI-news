@@ -69,21 +69,21 @@ input file needs to include the features below
 ### output
 
 - **out_entity.csv**
-- **out_keywords.csv**   # 这个是没有将entity与keywords交叉补充的原keywords表
-- **out_new_keywords.csv**   # 这个是将entity与keywords交叉补充的新keywords表
+- **out_keywords.csv**   
+- **out_new_keywords.csv**  
 
 ### parameter selection
 
 in python, modifying `param_grid` to finish parameter selection
 ```python
-param_grid = {'articleType':'AIDaily', # 新闻类型
+param_grid = {'articleType':'AIDaily', 
               'method' : 'zh_NER_TF', # method to deal with entity
               'contentMode' : [1, 1, 0],
               'useExpanded' : [1, 0, 1],
               'similarity' : 50,
-              'title_weight': 0.8, #标题所占比重
+              'title_weight': 0.8, 
               'cut_method': 'tfidf',
-              'top_k': 5, # 每篇新闻选择多少个关键词
+              'top_k': 5, 
               'normalize_title_content': True
 
         }
